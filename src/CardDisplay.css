@@ -1,0 +1,12 @@
+/* src/CardDisplay.css */
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px;
+  text-align: center;
+}
+
+.card img {
+  width: 50px; /* Adjust the size as needed */
+}
