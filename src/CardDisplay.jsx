@@ -141,31 +141,31 @@ const CardGame = () => {
           Generate Hands
         </button>
       </aside>
-      <main className="flex-grow pt-4 pl-64">
+      <main className="flex-grow pt-4" style={{ paddingLeft: '18rem' }}>
       {showCardPicker && (
-      <CardPicker
-        availableCards={deck.sort((a, b) => a.Value - b.Value)} // Sort the cards for display
-      selectedCards={selectedCards}
-        onCardSelect={handleCardSelection}
-      />
-        )}
-        <section className="mt-8">
-          {hands.map((hand, index) => (
-            <div key={index} className="m-2 p-3 bg-gray-700 rounded shadow">
-              <h2 className="font-semibold mb-2">Player {index + 1}</h2>
-              <div className="flex flex-wrap justify-center">
-                {hand.map((card, cardIndex) => (
-                  <div key={cardIndex} className="m-1"> {/* Use index since ImagePath can repeat if the deck is reset */}
-                    <img src={card.ImagePath} alt={`Card ${card.Value} of ${card.Suit}`} className="w-24 h-auto rounded" />
-                  </div>
-                ))}
-              </div>
+        <CardPicker
+          availableCards={deck.sort((a, b) => a.Value - b.Value)} // Sort the cards for display
+          selectedCards={selectedCards}
+          onCardSelect={handleCardSelection}
+        />
+      )}
+      <section className="flex flex-wrap justify-start mt-8">
+        {hands.map((hand, index) => (
+          <div key={index} className="m-2 p-3 bg-gray-700 rounded shadow" style={{ minWidth: '250px' }}>
+            <h2 className="font-semibold mb-2">Player {index + 1}</h2>
+            <div className="flex justify-center flex-wrap">
+              {hand.map((card, cardIndex) => (
+                <div key={cardIndex} className="m-1">
+                  <img src={card.ImagePath} alt={`Card ${card.Value} of ${card.Suit}`} className="w-16 md:w-24 h-auto rounded" />
+                </div>
+              ))}
             </div>
-          ))}
-        </section>
-      </main>
-    </div>
-  );
+          </div>
+        ))}
+      </section>
+    </main>
+  </div>
+);
 };
 
 
