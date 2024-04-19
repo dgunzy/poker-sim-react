@@ -24,7 +24,8 @@ const CardGame = () => {
   };
   
   const fetchNewDeck = async () => {
-    const response = await fetch('http://localhost:8080/deck');
+    const apiUrl = import.meta.env.VITE_API_HOST;
+    const response = await fetch(`${apiUrl}/deck`);
     const data = await response.json();
     setDeck(data);
     setHands([]);
