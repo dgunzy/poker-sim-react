@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CardPicker from './CardPicker'; // Make sure the file name matches the import exactly.
 
-const  HandsBehind = () => {
+const HandsBehind = () => {
   const [deck, setDeck] = useState([]);
   const [players, setPlayers] = useState(2);
   const [cardsPerPlayer, setCardsPerPlayer] = useState(5);
@@ -12,8 +12,16 @@ const  HandsBehind = () => {
   const [error, setError] = useState("");
   const [gameType, setGameType] = useState('2-7singledraw'); // New state for game type
 
+  const gameTypeCardMapping = {
+    '2-7singledraw': 5,
+    'poker': 5,
+    'blackjack': 2,
+    // Add more game types and their card counts here
+  };
+
   useEffect(() => {
     fetchNewDeck();
+    setCardsPerPlayer(gameTypeCardMapping[gameType] || 5); // Set cards per player based on game type
   }, [gameType]); // Fetch new deck when gameType changes
 
   const validateTotalCards = () => {
@@ -100,7 +108,7 @@ const  HandsBehind = () => {
           </div>
         )}
         <div className="mb-4">
-          <label htmlFor="num-players" className="block mb-2">Number of Players Behind:</label>
+          <label htmlFor="num-players" className="block mb-2">Number of Players:</label>
           <input
             id="num-players"
             type="number"
@@ -110,17 +118,19 @@ const  HandsBehind = () => {
             min="1"
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="cards-per-player" className="block mb-2">Cards per Player:</label>
-          <input
-            id="cards-per-player"
-            type="number"
-            value={cardsPerPlayer}
-            onChange={(e) => setCardsPerPlayer(parseInt(e.target.value, 10))}
-            className="text-white bg-gray-700 p-2 rounded w-full"
-            min="1"
-          />
-        </div>
+        {!gameTypeCardMapping[gameType] && (
+          <div className="mb-4">
+            <label htmlFor="cards-per-player" className="block mb-2">Cards per Player:</label>
+            <input
+              id="cards-per-player"
+              type="number"
+              value={cardsPerPlayer}
+              onChange={(e) => setCardsPerPlayer(parseInt(e.target.value, 10))}
+              className="text-white bg-gray-700 p-2 rounded w-full"
+              min="1"
+            />
+          </div>
+        )}
         <div className="mb-4">
           <label htmlFor="game-type" className="block mb-2">Game Type:</label>
           <select
@@ -130,6 +140,8 @@ const  HandsBehind = () => {
             className="text-white bg-gray-700 p-2 rounded w-full"
           >
             <option value="2-7singledraw">2-7 NL Single Draw</option>
+            <option value="poker">Poker</option>
+            <option value="blackjack">Blackjack</option>
             {/* Add more game types as needed */}
           </select>
         </div>
