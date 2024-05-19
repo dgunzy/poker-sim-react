@@ -75,24 +75,26 @@ const HandsBehind = () => {
     }
   };
 
-  const generateRandomHands = () => {
+  const runSimulation = async () => {
     if (!validateTotalCards()) {
       return;
     }
-    let newHands = presetHand.length ? [presetHand] : [];
-    let remainingDeck = [...deck];
 
-    for (let i = newHands.length; i < players; i++) {
-      let hand = [];
-      for (let j = 0; j < cardsPerPlayer; j++) {
-        let cardIndex = Math.floor(Math.random() * remainingDeck.length);
-        hand.push(remainingDeck.splice(cardIndex, 1)[0]);
-      }
-      newHands.push(hand);
-    }
+    const apiUrl = import.meta.env.VITE_API_HOST;
+    const response = await fetch(`${apiUrl}/generate-hands`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        gameType,
+        players,
+        selectedCards,
+      }),
+    });
 
-    setHands(newHands);
-    setShowCardPicker(false);
+    const data = await response.json();
+    console.log(data); // Print the response data to the console
   };
 
   return (
@@ -139,7 +141,7 @@ const HandsBehind = () => {
             onChange={(e) => setGameType(e.target.value)}
             className="text-white bg-gray-700 p-2 rounded w-full"
           >
-            <option value="2-7singledraw">2-7 NL Single Draw</option>
+            <option value="2-7singledraw">2-7 NL Single Draw </option>
             <option value="poker">Poker</option>
             <option value="blackjack">Blackjack</option>
             {/* Add more game types as needed */}
@@ -158,10 +160,10 @@ const HandsBehind = () => {
           Lock In Preset Hand
         </button>
         <button
-          onClick={generateRandomHands}
+          onClick={runSimulation}
           className="px-4 py-2 mt-2 bg-blue-500 hover:bg-blue-600 rounded text-white transition-colors w-full"
         >
-          Generate Hands
+          Run Sim
         </button>
       </aside>
       <main className="flex-grow pt-4" style={{ paddingLeft: '18rem' }}>
