@@ -32,10 +32,10 @@ const HandsBehind = () => {
     setError("");
     return true;
   };
-  
+
   const fetchNewDeck = async () => {
     const apiUrl = import.meta.env.VITE_API_HOST;
-    const response = await fetch(`${apiUrl}/deck?gameType=${gameType}`);
+    const response = await fetch(`${apiUrl}/deck`);
     const data = await response.json();
     setDeck(data);
     setHands([]);
@@ -81,7 +81,7 @@ const HandsBehind = () => {
     }
     let newHands = presetHand.length ? [presetHand] : [];
     let remainingDeck = [...deck];
-  
+
     for (let i = newHands.length; i < players; i++) {
       let hand = [];
       for (let j = 0; j < cardsPerPlayer; j++) {
@@ -90,7 +90,7 @@ const HandsBehind = () => {
       }
       newHands.push(hand);
     }
-  
+
     setHands(newHands);
     setShowCardPicker(false);
   };
