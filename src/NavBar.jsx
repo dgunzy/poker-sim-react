@@ -12,7 +12,7 @@ function NavBar() {
                     <Link to="/game">Game</Link>
                 </li>
                 <li>
-                    <Link to="/handpicker"> </Link>
+                    <Link to="/handbehind"> Hands Behind Sim </Link>
                 </li>
             </ul>
         </nav>
