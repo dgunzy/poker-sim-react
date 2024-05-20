@@ -64,16 +64,21 @@ const HandsBehind = () => {
   };
 
   const lockInPresetHand = () => {
-    if (selectedCards.length > 0 && selectedCards.length <= 52) {
+    const requiredCards = gameTypeCardMapping[gameType];
+  
+    if (selectedCards.length === requiredCards) {
       setPresetHand([...selectedCards]);
       setCardsPerPlayer(selectedCards.length);
       const newDeck = deck.filter((card) => !selectedCards.includes(card));
       setDeck(newDeck);
       setSelectedCards([]);
+      setError(""); // Clear any previous errors
     } else {
-      console.error('Invalid number of selected cards.');
+      setError(`Invalid number of selected cards. Expected ${requiredCards}, but got ${selectedCards.length}.`);
     }
   };
+  
+  
 
   const runSimulation = async () => {
     if (!validateTotalCards()) {
